@@ -43,19 +43,22 @@ class SJ_API(VacancyAPI):
         :return: None
         """
         vacancies = []
-        for vacancy in data_vacansyes:
-            # Создание списка для записи шаблона данных профессии в файл
-            sorted_vacancy = {
-                "id": vacancy['id'],
-                "profession": vacancy['profession'],
-                "date_published": datetime.fromtimestamp(vacancy["date_published"]).strftime("%Y-%m-%d %H:%M"),
-                "salary_from": vacancy['payment_from'],
-                "salary_to": vacancy['payment_to'],
-                "type_of_work": vacancy['type_of_work']['title'],
-                "experience": vacancy['experience']['title'],
-                "requirement": vacancy['candidat'],
-                "link": vacancy['link']
-            }
-            vacancies.append(sorted_vacancy)
+        try:
+            for vacancy in data_vacansyes:
+                # Создание списка для записи шаблона данных профессии в файл
+                sorted_vacancy = {
+                    "id": vacancy['id'],
+                    "profession": vacancy['profession'],
+                    "date_published": datetime.fromtimestamp(vacancy["date_published"]).strftime("%Y-%m-%d %H:%M"),
+                    "salary_from": vacancy['payment_from'],
+                    "salary_to": vacancy['payment_to'],
+                    "type_of_work": vacancy['type_of_work']['title'],
+                    "experience": vacancy['experience']['title'],
+                    "requirement": vacancy['candidat'],
+                    "link": vacancy['link']
+                }
+                vacancies.append(sorted_vacancy)
+        except TypeError as ex:
+            print(f"Тип данных для записи шаблона не корректен : {ex}")
         # Добавление вакансий в список в родительском классе
         VacancyAPI.vacancies_list.extend(vacancies)
