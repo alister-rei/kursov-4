@@ -42,29 +42,32 @@ class HH_API(VacancyAPI):
         :return: None
         """
         vacancyes = []
+        try:
+            for vacancy in data_vacansyes:
+                # Создание списка для записи шаблона данных профессии в файл
+                date = datetime.strptime(vacancy['published_at'], "%Y-%m-%dT%H:%M:%S%z").strftime("%Y-%m-%d %H:%M")
+                salary_from = 0
+                salary_to = 0
+                if not vacancy['salary'] is None:
+                    if not vacancy['salary']['from'] is None:
+                        salary_from = vacancy['salary']['from']
+                    if not vacancy['salary']['to'] is None:
+                        salary_from = vacancy['salary']['to']
 
-        for vacancy in data_vacansyes:
-            # Создание списка для записи шаблона данных профессии в файл
-            date = datetime.strptime(vacancy['published_at'], "%Y-%m-%dT%H:%M:%S%z").strftime("%Y-%m-%d %H:%M")
-            salary_from = 0
-            salary_to = 0
-            if not vacancy['salary'] is None:
-                if not vacancy['salary']['from'] is None:
-                    salary_from = vacancy['salary']['from']
-                if not vacancy['salary']['to'] is None:
-                    salary_from = vacancy['salary']['to']
+                sorted_vacancy = {
+                    "id": vacancy['id'],
+                    "profession": vacancy['name'],
+                    "date_published": date,
+                    "salary_from": salary_from,
+                    "salary_to": salary_to,
+                    "type_of_work": vacancy['employment']['name'],
+                    "experience": vacancy['experience']['name'],
+                    "requirement": vacancy['snippet']['requirement'],
+                    "link": vacancy['alternate_url']
+                }
+                vacancyes.append(sorted_vacancy)
 
-            sorted_vacancy = {
-                "id": vacancy['id'],
-                "profession": vacancy['name'],
-                "date_published": date,
-                "salary_from": salary_from,
-                "salary_to": salary_to,
-                "type_of_work": vacancy['employment']['name'],
-                "experience": vacancy['experience']['name'],
-                "requirement": vacancy['snippet']['requirement'],
-                "link": vacancy['alternate_url']
-            }
-            vacancyes.append(sorted_vacancy)
+        except TypeError as ex:
+            print(f"Тип данных для записи шаблона не корректен : {ex}")
         # Добавление вакансий в список в родительском классе
         VacancyAPI.vacancies_list.extend(vacancyes)
