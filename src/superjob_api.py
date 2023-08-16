@@ -8,7 +8,8 @@ import requests
 class SJ_API(VacancyAPI):
     """ Класс для получения вакансий с Api hh.ru """
 
-    def get_vacancyes(self, keyword: str, town: str,  count) -> list[dict[str]]:
+    @classmethod
+    def get_vacancyes(cls, keyword: str, town: str, count) -> list[dict[str]]:
         """
         Получает вакансии с сайта в формате json словарей
         :param town: Город где искать вакансии
@@ -35,7 +36,8 @@ class SJ_API(VacancyAPI):
         except ParsingError as ex:
             print(f"Ошибка в запросе: {ex}")
 
-    def package_vacancyes(self, data_vacansyes: list[dict[str]]) -> None:
+    @classmethod
+    def package_vacancyes(cls, data_vacansyes: list[dict[str]]) -> None:
         """
         получает список со всеми данными вакансий с Api
         и складывает в список родительского класса
