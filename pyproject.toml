@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "kursov-4"
+version = "0.1.0"
+description = ""
+authors = ["Хадков_Алексей <lhadkov@mail.ru>"]
+readme = "README.md"
+packages = [{include = "kursov_4"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.31.0"
+pathlib = "^1.0.1"
+python-dotenv = "^1.0.0"
+pytest = "^7.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
