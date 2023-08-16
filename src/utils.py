@@ -3,7 +3,7 @@ from headhunter_api import HH_API
 from vacancy import Vacancy
 
 
-def load_vacancy(choice:str|tuple, keyword:str, town:str, count:int) -> None:
+def load_vacancy(choice: str | tuple, keyword: str, town: str, count: int) -> None:
     """
     Загружает вакансии с Api и записывает в файл
     :param choice: строка или кортеж для определения с каких платформ загружать вакансии
@@ -13,14 +13,12 @@ def load_vacancy(choice:str|tuple, keyword:str, town:str, count:int) -> None:
     :return: None
     """
     if "hh" in choice:
-        vacancy1 = HH_API()
-        vacancyes = vacancy1.get_vacancyes(keyword, town, count)
-        vacancy1.package_vacancyes(vacancyes)
+        vacancyes = HH_API.get_vacancyes(keyword, town, count)
+        HH_API.package_vacancyes(vacancyes)
 
     if "sj" in choice:
-        vacancy2 = SJ_API()
-        vacancyes = vacancy2.get_vacancyes(keyword, town, count)
-        vacancy2.package_vacancyes(vacancyes)
+        vacancyes = SJ_API.get_vacancyes(keyword, town, count)
+        SJ_API.package_vacancyes(vacancyes)
 
     data = HH_API.vacancies_list
     HH_API.write_json(data)
@@ -51,5 +49,3 @@ def print_vacancyes(mode) -> None:
 
     for vacancy in vacancyes:
         vacancy.print_vacancy()
-
-
